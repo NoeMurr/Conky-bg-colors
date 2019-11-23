@@ -33,8 +33,6 @@ SOFTWARE.
 
 
 require("lfs")
--- no function checks for errors.
--- you should check for them
 
 function isFile(name)
     if type(name)~="string" then return false end
@@ -90,15 +88,11 @@ function extract_colors_from_image(path, number_of_colors, cache_dir)
     
     if not isFile(palette_name) then 
         -- the file file does not exists I have to create the palette
-        print('I have to create the palette')
-        print('palete name: ' .. palette_name)
-
         -- creating the color palette
         local cmd = 'convert "' .. path .. '" +dither ' ..
                     '-colors ' .. tostring(number_of_colors) ..
                     ' -unique-colors -filter box "' .. palette_name .. '"'
 
-        print(cmd)
         if not os.execute(cmd) then 
             error("Cannot create the color palette!")
         end
